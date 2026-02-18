@@ -1,0 +1,21 @@
+
+> prepwise@0.1.0 dev
+> next dev --turbopack --hostname 127.0.0.1 --port 3000
+
+   ▲ Next.js 15.2.2 (Turbopack)
+   - Local:        http://127.0.0.1:3000
+   - Network:      http://127.0.0.1:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 2.9s
+ ○ Compiling / ...
+ ✓ Compiled / in 41.2s
+ HEAD / 307 in 160ms
+ ○ Compiling /sign-in ...
+ ✓ Compiled /sign-in in 3.7s
+ HEAD /sign-in 200 in 3991ms
+   Reload env: .env.local
+   Reload env: .env.local
+   Reload env: .env.local
+   Reload env: .env.local
