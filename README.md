@@ -1,22 +1,12 @@
 <div align="center">
-  <br />
-    <a href="https://www.youtube.com/watch?v=8GK8R77Bd7g" target="_blank">
-      <img src="https://github.com/user-attachments/assets/1c0131c7-9f2d-4e3b-b47c-9679e76d8f9a" alt="Project Banner">
-    </a>
-  <br />
-  
   <div>
     <img src="https://img.shields.io/badge/-Next.JS-black?style=for-the-badge&logoColor=white&logo=nextdotjs&color=black" alt="next.js" />
     <img src="https://img.shields.io/badge/-Vapi-white?style=for-the-badge&color=5dfeca" alt="vapi" />
     <img src="https://img.shields.io/badge/-Tailwind_CSS-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4" alt="tailwindcss" />
-    <img src="https://img.shields.io/badge/-Firebase-black?style=for-the-badge&logoColor=white&logo=firebase&color=DD2C00" alt="firebase" />
+    <img src="https://img.shields.io/badge/-MongoDB-black?style=for-the-badge&logoColor=white&logo=mongodb&color=47A248" alt="mongodb" />
   </div>
 
-  <h3 align="center">Prepwise: A job interview preparation platform powered by Vapi AI Voice agents</h3>
-
-   <div align="center">
-     Build this project step by step with our detailed tutorial on <a href="https://www.youtube.com/@javascriptmastery/videos" target="_blank"><b>JavaScript Mastery</b></a> YouTube. Join the JSM family!
-    </div>
+  <h3 align="center">Prepwise: an AI mock-interview platform with Vapi voice agents and Gemini-generated feedback</h3>
 </div>
 
 ## 📋 <a name="table">Table of Contents</a>
@@ -27,39 +17,27 @@
 4. 🤸 [Quick Start](#quick-start)
 5. 🕸️ [Snippets (Code to Copy)](#snippets)
 6. 🔗 [Assets](#links)
-7. 🚀 [More](#more)
-
-## 🚨 Tutorial
-
-This repository contains the code corresponding to an in-depth tutorial available on our YouTube channel, <a href="https://www.youtube.com/@javascriptmastery/videos" target="_blank"><b>JavaScript Mastery</b></a>.
-
-If you prefer visual learning, this is the perfect resource for you. Follow our tutorial to learn how to build projects like these step-by-step in a beginner-friendly manner!
-
-<a href="https://www.youtube.com/watch?v=8GK8R77Bd7g" target="_blank"><img src="https://github.com/sujatagunale/EasyRead/assets/151519281/1736fca5-a031-4854-8c09-bc110e3bc16d" /></a>
+7. 🧠 [What I Learned](#learned)
 
 ## <a name="introduction">🤖 Introduction</a>
 
-Built with Next.js for the user interface and backend logic, Firebase for authentication and data storage, styled with TailwindCSS and using Vapi's voice agents, Prepwise is a website project designed to help you learn integrating AI models with your apps. The platform offers a sleek and modern experience for job interview preparation.
-
-If you're getting started and need assistance or face any bugs, join our active Discord community with over **50k+** members. It's a place where people help each other out.
-
-<a href="https://discord.com/invite/n6EdbFJ" target="_blank"><img src="https://github.com/sujatagunale/EasyRead/assets/151519281/618f4872-1e10-42da-8213-1d69e486d02e" /></a>
+Prepwise started from the JavaScript Mastery "AI Mock Interviews" tutorial, but the auth and persistence layer has been rebuilt: instead of Firebase, this version uses a custom session-cookie auth (HMAC-signed JWT-style tokens, scrypt password hashing) backed by MongoDB. Users sign up, generate role-specific interviews (via Vapi voice agents + Gemini), take the interview by voice, and get AI-generated feedback on their transcript.
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
 
-- Next.js
-- Firebase
-- Tailwind CSS
-- Vapi AI
-- shadcn/ui
-- Google Gemeni
-- Zod
+- Next.js 15 (App Router, Turbopack)
+- MongoDB (native driver, custom `getDb()` connection helper)
+- Custom auth: HMAC-signed session cookies + scrypt password hashing (no Firebase/NextAuth)
+- Tailwind CSS + shadcn/ui
+- Vapi AI (voice agents)
+- Google Gemini via Vercel AI SDK (`@ai-sdk/google`)
+- Zod + React Hook Form
 
 ## <a name="features">🔋 Features</a>
 
-👉 **Authentication**: Sign Up and Sign In using password/email authentication handled by Firebase.
+👉 **Authentication**: Sign Up and Sign In with email/password, sessions stored as signed HTTP-only cookies (custom implementation, not Firebase).
 
-👉 **Create Interviews**: Easily generate job interviews with help of Vapi voice assistants and Google Gemini.
+👉 **Create Interviews**: Generate job interviews with Vapi voice assistants and Google Gemini.
 
 👉 **Get feedback from AI**: Take the interview with AI voice agent, and receive instant feedback based on your conversation.
 
@@ -88,8 +66,8 @@ Make sure you have the following installed on your machine:
 **Cloning the Repository**
 
 ```bash
-git clone https://github.com/adrianhajdin/ai_mock_interviews.git
-cd ai_mock_interviews
+git clone https://github.com/Vedantd2003/AI-Interview-Assistant.git
+cd AI-Interview-Assistant
 ```
 
 **Installation**
@@ -112,19 +90,13 @@ GOOGLE_GENERATIVE_AI_API_KEY=
 
 NEXT_PUBLIC_BASE_URL=
 
-NEXT_PUBLIC_FIREBASE_API_KEY=
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
-NEXT_PUBLIC_FIREBASE_APP_ID=
+MONGODB_URI=
+MONGODB_DB=
 
-FIREBASE_PROJECT_ID=
-FIREBASE_CLIENT_EMAIL=
-FIREBASE_PRIVATE_KEY=
+SESSION_SECRET=
 ```
 
-Replace the placeholder values with your actual **[Firebase](https://firebase.google.com/)**, **[Vapi](https://vapi.ai/?utm_source=youtube&utm_medium=video&utm_campaign=jsmastery_recruitingpractice&utm_content=paid_partner&utm_term=recruitingpractice)** credentials.
+Replace the placeholder values with your actual **MongoDB** connection string and **[Vapi](https://vapi.ai/)** credentials. `SESSION_SECRET` is used to sign session cookies.
 
 **Running the Project**
 
@@ -709,13 +681,8 @@ export const dummyInterviews: Interview[] = [
 
 Public assets used in the project can be found [here](https://drive.google.com/drive/folders/1DuQ9bHH3D3ZAN_CFKfBgsaB8DEhEdnog?usp=sharing)
 
-## <a name="more">🚀 More</a>
+## <a name="learned">🧠 What I Learned</a>
 
-**Advance your skills with Next.js Pro Course**
-
-Enjoyed creating this project? Dive deeper into our PRO courses for a richer learning adventure. They're packed with
-detailed explanations, cool features, and exercises to boost your skills. Give it a go!
-
-<a href="https://jsmastery.pro/next15" target="_blank">
-   <img src="https://github.com/user-attachments/assets/b8760e69-1f81-4a71-9108-ceeb1de36741" alt="Project Banner">
-</a>
+- Replacing a managed auth provider (Firebase) with a hand-rolled session system meant implementing password hashing (scrypt with per-user salts) and HMAC-signed session cookies, and reasoning about cookie flags (`httpOnly`, `secure`, `sameSite`) myself instead of trusting a SDK default.
+- Wiring the Vercel AI SDK (`@ai-sdk/google`) to Gemini for both question generation and feedback scoring showed how much prompt structure matters when the output has to be parsed as JSON downstream.
+- Coordinating a third-party voice agent (Vapi) with server-side data fetching in the Next.js App Router required careful thought about which logic runs as a Server Action vs. client component.
